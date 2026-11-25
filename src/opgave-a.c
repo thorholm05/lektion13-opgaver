@@ -1,10 +1,7 @@
-/* TODO: Consider implementing the functions in a library
- *       and add tests to check that your functions work correctly
- */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
+#include <windows.h>
 
 struct tree_node {
     int key;
@@ -21,6 +18,8 @@ void print_tree_helper(tree_node* tree_ptr, int level);
 int tree_height(tree_node* tree_ptr);
 
 int main(void) {
+    SetConsoleOutputCP(CP_UTF8);
+    SetConsoleCP(CP_UTF8);
     tree_node* tree4 = NULL;
     tree4 = insert_in_binary_search_tree(tree4, 6);
     tree4 = insert_in_binary_search_tree(tree4, 2);
@@ -32,10 +31,9 @@ int main(void) {
     tree4 = insert_in_binary_search_tree(tree4, 9);
     tree4 = insert_in_binary_search_tree(tree4, 8);
 
-    printf("tree4:\n");
-    print_tree(tree4);
+    printf("Træets højde: %d\n", tree_height(tree4));
 
-    exit(EXIT_FAILURE);
+    exit(EXIT_SUCCESS);
 }
 
 
@@ -118,5 +116,19 @@ void print_tree_helper(tree_node* tree_ptr, int level) {
 
 /* TODO: Opgave */
 int tree_height(tree_node* tree_ptr) {
-    return 0;
+    // if it is an empty tree
+    if (tree_ptr == NULL) {
+        return -1;
+    }
+
+    // Calculate the height of both subtrees
+    int left_height = tree_height(tree_ptr->leftp);
+    int right_height = tree_height(tree_ptr->rightp);
+
+    // Return the largest height plus one
+    if (left_height > right_height) {
+        return left_height + 1;
+    } else {
+        return right_height + 1;
+    }
 }
